@@ -1,9 +1,6 @@
 import React, { useState } from "react";
+import Separator from "../custom/Separator";
 import { NavLink } from "react-router-dom";
-
-function Separator() {
-  return <span className="mx-2"> &#124;</span>;
-}
 
 function PageNav() {
   const [showNavItems, setShowNavItems] = useState(false);
@@ -23,7 +20,7 @@ function PageNav() {
       >
         <ul className="navbar-nav list-unstyled d-flex justify-content-center ">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/pricing">
+            <NavLink className="nav-link" to="/">
               Home
             </NavLink>
           </li>

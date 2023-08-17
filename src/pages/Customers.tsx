@@ -1,4 +1,4 @@
-import CustomContainerComponent from "../components/CustomContainerComponent";
+import CustomContainerComponent from "../components/custom/CustomContainerComponent";
 import CustomerTable from "../components/Customers-table/CustomerTable";
 
 function Customers() {

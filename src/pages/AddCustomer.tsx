@@ -1,17 +1,17 @@
-import CustomContainerRowCol from "../components/CustomContainerComponent";
+import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 
 function AddCustomer() {
   return (
     <CustomContainerRowCol
       containerClasses="container"
       rowClasses="row justify-content-center mt-5"
-      colClasses="col-lg-7 col-md-6"
+      colClasses="col-sm-8 col-md-6 col-lg-5 "
     >
       <div className="card bg-secondary text-white align-items-center">
         <div className="card-body justify-content-center">
           {/*//? probably delete shadow-sm p-3 mb-5 rounded  */}
           <div className="d-flex gap-2 align-items-center shadow-sm  p-3 mb-5 rounded  ">
-            <button className="btn btn-success">+</button>
+            {/* <button className="btn btn-success">+</button> */}
             <h5 className="card-title">
               <strong>New customer</strong>
             </h5>

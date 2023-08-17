@@ -1,8 +1,10 @@
+import Separator from "../custom/Separator";
+
 const DUMMY_ARRAY = [
   {
     name: "ilias",
     surname: "giontis",
-    address: "18hs oktwvriou 5",
+    address: "2hs norway 5",
   },
   {
     name: "bill",
@@ -12,7 +14,7 @@ const DUMMY_ARRAY = [
   {
     name: "ivan",
     surname: "garcia",
-    address: "255hs oktwvriou 999",
+    address: "9th Street germany dortmund",
   },
 ];
 
@@ -27,7 +29,11 @@ function Customer() {
           <td>{person.name}</td>
           <td>{person.surname}</td>
           <td>{person.address}</td>
-          <td>@mdo</td>
+          <td className="d-flex align-items-center">
+            <button className="btn btn-info btn-sm ">edit</button>
+            <Separator />
+            <button className="btn btn-danger btn-sm ">delete</button>
+          </td>
         </tr>
       ))}
     </tbody>

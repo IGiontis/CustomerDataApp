@@ -1,5 +1,5 @@
-import CustomContainerRowCol from "../components/CustomContainerComponent";
-import PageNav from "../components/navbar/PageNav";
+import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
+
 function HomePage() {
   return (
     <CustomContainerRowCol
@@ -7,7 +7,13 @@ function HomePage() {
       rowClasses="row justify-content-center mb-3 mt-3"
       colClasses="col-md-8"
     >
-      <PageNav />
+      <div>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum tenetur neque maxime
+        dolorum, mollitia necessitatibus minus quod voluptatum ab quae temporibus quia cum, animi,
+        laboriosam minima officia ducimus harum debitis veniam ad sed adipisci itaque. Id, at vero
+        quos nemo assumenda molestiae reprehenderit! Dicta quia odit dolores sapiente labore illo
+        officia amet blanditiis corporis ab.
+      </div>
     </CustomContainerRowCol>
   );
 }

@@ -3,13 +3,14 @@ import HomePage from "../pages/HomePage";
 import Customers from "../pages/Customers";
 import AddCustomer from "../pages/AddCustomer";
 import PageNotFound from "../pages/PageNotFound";
+import PageNav from "../components/navbar/PageNav";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <HomePage></HomePage>
+      <PageNav></PageNav>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route index element={<HomePage />} />
         <Route path="customers" element={<Customers />} />
         <Route path="add-customer" element={<AddCustomer />} />
         <Route path="*" element={<PageNotFound />} />
