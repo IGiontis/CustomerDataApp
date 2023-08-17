@@ -32,7 +32,7 @@ function PageNav() {
           </li>
 
           <li className="nav-item">
-            <NavLink className="nav-link" to="/customers">
+            <NavLink className="nav-link" to="/customers/list">
               Customers
             </NavLink>
           </li>

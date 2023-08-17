@@ -12,27 +12,35 @@ const DUMMY_ARRAY = [
     address: "2hs oktwvriou 22",
   },
   {
-    name: "ivan",
+    name: "marianthi",
     surname: "garcia",
-    address: "9th Street germany dortmund",
+    address: "104th street of budapest with front view of the river",
   },
 ];
 
 function Customer() {
   return (
     <tbody>
-      {/* //! here i need to change the key with the id of the database */}
-      {/* //todo also here i need to make the actions edit and delete */}
       {DUMMY_ARRAY.map((person) => (
         <tr key={Math.random()}>
           <th scope="row">1</th>
           <td>{person.name}</td>
           <td>{person.surname}</td>
-          <td>{person.address}</td>
+          <td>
+            {/*//? HERE the div and the style is to apply the scroll bar without this it will make word-wrap and make bigger the cells */}
+            <div
+              style={{
+                maxHeight: "30px",
+                overflowY: "auto",
+              }}
+            >
+              {person.address}
+            </div>
+          </td>
           <td className="d-flex align-items-center">
-            <button className="btn btn-info btn-sm ">edit</button>
+            <button className="btn btn-info btn-sm">edit</button>
             <Separator />
-            <button className="btn btn-danger btn-sm ">delete</button>
+            <button className="btn btn-danger btn-sm">delete</button>
           </td>
         </tr>
       ))}

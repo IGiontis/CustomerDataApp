@@ -11,7 +11,7 @@ function AppRoutes() {
       <PageNav></PageNav>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="customers" element={<Customers />} />
+        <Route path="customers/list" element={<Customers />} />
         <Route path="add-customer" element={<AddCustomer />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
