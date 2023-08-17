@@ -2,7 +2,7 @@ import Customer from "./CustomerBody";
 function CustomerTable() {
   return (
     <div className="table-responsive-sm">
-      <table className="table table-striped table-condensed table-bordered">
+      <table className="table table-striped table-condensed table-bordered ">
         {/* Header of the table */}
         <thead className="thead-light">
           <tr>

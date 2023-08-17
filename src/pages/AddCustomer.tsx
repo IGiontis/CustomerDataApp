@@ -10,7 +10,7 @@ function AddCustomer() {
       <div className="card bg-secondary text-white align-items-center">
         <div className="card-body justify-content-center">
           {/*//? probably delete shadow-sm p-3 mb-5 rounded  */}
-          <div className="d-flex gap-2 align-items-center shadow-sm  p-3 mb-5 rounded ">
+          <div className="d-flex gap-2 align-items-center shadow-sm  p-3 mb-5 rounded  ">
             <button className="btn btn-success">+</button>
             <h5 className="card-title">
               <strong>New customer</strong>

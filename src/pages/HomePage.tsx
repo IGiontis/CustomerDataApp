@@ -1,5 +1,5 @@
 import CustomContainerRowCol from "../components/CustomContainerComponent";
-import PageNav from "../components/PageNav";
+import PageNav from "../components/navbar/PageNav";
 function HomePage() {
   return (
     <CustomContainerRowCol

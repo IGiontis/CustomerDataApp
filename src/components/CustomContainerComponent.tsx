@@ -1,16 +1,19 @@
 import { ReactNode } from "react";
 
+// i made this type
+interface CustomContainerRowColProps {
+  containerClasses: string;
+  rowClasses: string;
+  colClasses: string;
+  children: ReactNode;
+}
+
 function CustomContainerRowCol({
   containerClasses,
   rowClasses,
   colClasses,
   children,
-}: {
-  containerClasses: string;
-  rowClasses: string;
-  colClasses: string;
-  children: ReactNode;
-}) {
+}: CustomContainerRowColProps) {
   return (
     <div className={`${containerClasses}`}>
       <div className={` ${rowClasses}`}>

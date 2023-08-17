@@ -19,8 +19,10 @@ const DUMMY_ARRAY = [
 function Customer() {
   return (
     <tbody>
+      {/* //! here i need to change the key with the id of the database */}
+      {/* //todo also here i need to make the actions edit and delete */}
       {DUMMY_ARRAY.map((person) => (
-        <tr>
+        <tr key={Math.random()}>
           <th scope="row">1</th>
           <td>{person.name}</td>
           <td>{person.surname}</td>
