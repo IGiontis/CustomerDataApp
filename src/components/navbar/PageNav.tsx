@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Separator from "../custom/Separator";
 import { NavLink } from "react-router-dom";
+import Modal from "../Modal";
 
 function PageNav() {
   const [showNavItems, setShowNavItems] = useState(false);
@@ -14,6 +15,7 @@ function PageNav() {
       <button className="navbar-toggler" type="button" onClick={toggleNavItems}>
         <span className="navbar-toggler-icon"></span>
       </button>
+
       {/* the show and the empty '' is for the true/false */}
       <div
         className={`collapse navbar-collapse ${showNavItems ? "show" : ""} justify-content-center`}

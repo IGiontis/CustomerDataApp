@@ -1,12 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Customer from "./CustomerBody";
 
 function CustomerTable() {
+  // const navigate = useNavigate();
+
   return (
     <div className="table-responsive-sm">
-      <Link to="/add-customer">
+      {/* <button
+        className="btn btn-success btn-sm mt-4 mb-2 ms-4 "
+        onClick={() => navigate("add-customer")}
+      >
+        +New
+      </button> */}
+
+      <Link to="/customers/list/add-customer">
         <button className="btn btn-success btn-sm mt-4 mb-2 ms-4 ">+New</button>
       </Link>
+
       <table className="table table-striped table-condensed table-bordered ">
         {/* Header of the table */}
         <thead className="thead-light">
