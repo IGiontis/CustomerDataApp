@@ -1,29 +1,61 @@
+import { useEffect, useState } from "react";
 import Separator from "../custom/Separator";
 
-const DUMMY_ARRAY = [
-  {
-    name: "ilias",
-    surname: "giontis",
-    address: "2hs norway 5",
-  },
-  {
-    name: "bill",
-    surname: "mulwnas",
-    address: "2hs oktwvriou 22",
-  },
-  {
-    name: "marianthi",
-    surname: "garcia",
-    address: "104th street of budapest with front view of the river",
-  },
-];
+// !DUMMY ARRAY FOR TESTING DELETE LATER
+// const DUMMY_ARRAY = [
+//   {
+//     name: "ilias",
+//     surname: "giontis",
+//     address: "2hs norway 5",
+//   },
+//   {
+//     name: "bill",
+//     surname: "mulwnas",
+//     address: "2hs oktwvriou 22",
+//   },
+//   {
+//     name: "marianthi",
+//     surname: "garcia",
+//     address: "104th street of budapest with front view of the river",
+//   },
+// ];
+
+interface CustomerType {
+  id: number;
+  name: string;
+  surname: string;
+  address: string[];
+}
 
 function Customer() {
+  //* i use any[] i don't know why, i found it on stackoverflow
+  //* i need to specify the data i'm taking from the backend so i can put it into the any
+  const [customer, setCustomer] = useState<CustomerType[]>([]);
+
+  useEffect(function () {
+    async function fetchCustomersInfo() {
+      try {
+        const res = await fetch("http://localhost:8080/Facade/cust/getAll");
+        const data = await res.json();
+        console.log(data);
+        setCustomer(data);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
+
+    fetchCustomersInfo();
+  }, []);
+
+  // fetch("http://localhost:8080/Facade/cust/getAll")
+  //   .then((response) => response.json())
+  //   .then((data) => console.log(data));
+
   return (
     <tbody>
-      {DUMMY_ARRAY.map((person) => (
-        <tr key={Math.random()}>
-          <th scope="row">1</th>
+      {customer.map((person) => (
+        <tr key={person.id}>
+          <th scope="row">{person.id}</th>
           <td>{person.name}</td>
           <td>{person.surname}</td>
           <td>

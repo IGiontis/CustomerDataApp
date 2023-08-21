@@ -1,21 +1,25 @@
 import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 
-function AddCustomer() {
+function AddCustomer({ showTitle = true }) {
   return (
+    //? here  in colClasses i can change both modal and add-customer component. Maybe i can add something like if to check when its modal or its just the component.
     <CustomContainerRowCol
       containerClasses="container"
       rowClasses="row justify-content-center mt-5"
-      colClasses="col-sm-8 col-md-6 col-lg-5 "
+      colClasses={showTitle ? "col-sm-8 col-md-7 col-lg-6" : '"col-sm-8 col-md-10 col-lg-10 "'}
     >
       <div className="card bg-secondary text-white align-items-center">
         <div className="card-body justify-content-center">
           {/*//? probably delete shadow-sm p-3 mb-5 rounded  */}
-          <div className="d-flex gap-2  justify-content-center align-items-center shadow-sm  p-3 mb-5 rounded  ">
-            {/* <button className="btn btn-success">+</button> */}
-            <h5 className="card-title">
-              <strong>New customer</strong>
-            </h5>
-          </div>
+          {/*//? here i make it the showtitle because in few places i don't want to show the title  */}
+          {showTitle && (
+            <div className="d-flex gap-2  justify-content-center align-items-center shadow-sm  p-3 mb-5 rounded  ">
+              {/* <button className="btn btn-success">+</button> */}
+              <h5 className="card-title">
+                <strong>New customer</strong>
+              </h5>
+            </div>
+          )}
           <form className="col-md-12 ">
             <div className="mb-3 mt-4">
               <label htmlFor="name" className="form-label">

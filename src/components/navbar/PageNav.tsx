@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Separator from "../custom/Separator";
 import { NavLink } from "react-router-dom";
-import Modal from "../Modal";
 
 function PageNav() {
   const [showNavItems, setShowNavItems] = useState(false);
@@ -26,8 +25,6 @@ function PageNav() {
               Home
             </NavLink>
           </li>
-
-          {/* // todo make them align with other things  below center items doesn't do anything */}
 
           <li className="nav-item justify-content-center align-self-center">
             {!showNavItems && <Separator />}
