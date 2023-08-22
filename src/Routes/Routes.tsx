@@ -12,9 +12,7 @@ function AppRoutes() {
       <PageNav></PageNav>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="customers/list" element={<Customers />}>
-          {/* <Route path="add-customer" element={<p>test</p>} /> */}
-        </Route>
+        <Route path="customers/list" element={<Customers />}></Route>
         {/* <Route path="/customers/list/add-customer" element={<AddCustomer />} /> */}
         <Route path="/customers/list/add-customer" element={<ModalCustomer />} />
         <Route path="/add-customer" element={<AddCustomer />} />
@@ -25,5 +23,3 @@ function AppRoutes() {
 }
 
 export default AppRoutes;
-
-//? Here i make the root absolute somehow probably i need to make it like children

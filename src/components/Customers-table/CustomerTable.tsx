@@ -1,19 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Customer from "./CustomerBody";
 import ModalCustomer from "../custom/ModalCustomer";
+import { useSelector } from "react-redux";
+import FetchDataFailed from "../Errors/FetchDataFailed";
 
 function CustomerTable() {
-  // const navigate = useNavigate();
+  const fetchErrorHandler = useSelector((state: any) => state.fetchDataError.fetchErrorHandler);
 
-  return (
+  //* here i use ternary operator to show the data if isn't loading
+  return fetchErrorHandler ? (
+    <FetchDataFailed />
+  ) : (
     <div className="table-responsive-sm">
-      {/* <button
-        className="btn btn-success btn-sm mt-4 mb-2 ms-4 "
-        onClick={() => navigate("add-customer")}
-      >
-        +New
-      </button> */}
-
       {/*//! test mode here  */}
       {/* [onHide, closeButton] are react-bootstrap build in value */}
 
@@ -54,8 +52,7 @@ function CustomerTable() {
           </tr>
         </thead>
 
-        {/* Body starts inside the customer*/}
-        {/* //? Here i loop over the customers and i print them to the screen */}
+        {/* //* Here i loop over the customers and i print them to the screen */}
         <Customer />
       </table>
     </div>

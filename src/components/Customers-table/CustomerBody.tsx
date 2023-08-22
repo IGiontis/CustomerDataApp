@@ -1,51 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Separator from "../custom/Separator";
-
-// !DUMMY ARRAY FOR TESTING DELETE LATER
-// const DUMMY_ARRAY = [
-//   {
-//     name: "ilias",
-//     surname: "giontis",
-//     address: "2hs norway 5",
-//   },
-//   {
-//     name: "bill",
-//     surname: "mulwnas",
-//     address: "2hs oktwvriou 22",
-//   },
-//   {
-//     name: "marianthi",
-//     surname: "garcia",
-//     address: "104th street of budapest with front view of the river",
-//   },
-// ];
-
-interface CustomerType {
-  id: number;
-  name: string;
-  surname: string;
-  address: string[];
-}
+import { useDispatch, useSelector } from "react-redux";
+import { setCustomers } from "../../Redux/customerSlice";
+import DeleteButton from "./DeleteButton";
+import CustomerType from "../../interfaces/customerTypes";
+import { toggleFetchError } from "../../Redux/errorSlice";
 
 function Customer() {
-  //* i use any[] i don't know why, i found it on stackoverflow
-  //* i need to specify the data i'm taking from the backend so i can put it into the any
-  const [customer, setCustomer] = useState<CustomerType[]>([]);
+  const dispatch = useDispatch();
+  const fetchErrorData = useSelector((state: any) => state.fetchDataError.fetchErrorHandler);
+  //* i don't know what type has the state
+  const customers: CustomerType[] = useSelector((state: any) => state.customers);
 
-  useEffect(function () {
-    async function fetchCustomersInfo() {
-      try {
-        const res = await fetch("http://localhost:8080/Facade/cust/getAll");
-        const data = await res.json();
-        console.log(data);
-        setCustomer(data);
-      } catch (error: any) {
-        console.log(error.message);
+  //* fetching the customers from the backend
+  useEffect(
+    function () {
+      async function fetchCustomersInfo() {
+        try {
+          const res = await fetch("http://localhost:8080/Facade/cust/getAll");
+          const data = await res.json();
+          console.log(data);
+          dispatch(setCustomers(data));
+          dispatch(toggleFetchError(false));
+        } catch (error: any) {
+          dispatch(toggleFetchError(true));
+          console.log(error.message);
+        }
       }
-    }
 
-    fetchCustomersInfo();
-  }, []);
+      fetchCustomersInfo();
+    },
+    [dispatch]
+  );
 
   // fetch("http://localhost:8080/Facade/cust/getAll")
   //   .then((response) => response.json())
@@ -53,7 +39,7 @@ function Customer() {
 
   return (
     <tbody>
-      {customer.map((person) => (
+      {customers.map((person) => (
         <tr key={person.id}>
           <th scope="row">{person.id}</th>
           <td>{person.name}</td>
@@ -72,7 +58,12 @@ function Customer() {
           <td className="d-flex align-items-center">
             <button className="btn btn-info btn-sm">edit</button>
             <Separator />
-            <button className="btn btn-danger btn-sm">delete</button>
+            {/* <button className="btn btn-danger btn-sm">delete</button> */}
+            <DeleteButton
+              classes="btn btn-danger btn-sm"
+              customerId={person.id}
+              customerName={person.name}
+            ></DeleteButton>
           </td>
         </tr>
       ))}
