@@ -14,6 +14,11 @@ const customerSlice = createSlice({
     addCustomer(state: any, action) {
       console.log(action.payload);
       state.push(action.payload);
+      console.log(initialState);
+    },
+
+    editCustomer(state, action) {
+      console.log(action.payload);
     },
 
     deleteCustomer(state: any, action) {

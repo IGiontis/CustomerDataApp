@@ -35,9 +35,9 @@ function DeleteButton({ classes, customerId, customerName }: DeleteButtonProps) 
   };
 
   return (
-    <div className={classes} onClick={handleDeleteClick}>
+    <button className={classes} onClick={handleDeleteClick}>
       Delete
-    </div>
+    </button>
   );
 }
 

@@ -6,57 +6,108 @@ import { addCustomer } from "../Redux/customerSlice";
 import { useNavigate } from "react-router-dom";
 import { toggleFetchError } from "../Redux/errorSlice";
 
+//! delete
+import CustomerType from "../interfaces/customerTypes";
+
 //! IMPORTANT NOTE:
 //* Here i pass the error handler from my reducer but i don't use it. Because when i don't have the server up will say from the beginning that error has been thrown
 
 //! IMPORTANT NOTE:
 
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
 function AddCustomer({ showTitle = true }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const erroHandler = useSelector((state: any) => state.fetchDataError.fetchErrorHandler);
 
-  const [newCustomer, setNewCustomer] = useState({
-    name: "",
-    surname: "",
-    address: [],
+  // ? here i take the customers so i can change them with the edit
+  const customers: CustomerType[] = useSelector((state: any) => state.customers);
+  const test = customers.map((testaki: any) => {
+    console.log(testaki.id);
   });
 
-  // the type of the event is from here https://fettblog.eu/typescript-react/events/ i added react
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //* destruction and take each name and each value
-    const { name, value } = event.target;
+  // ? here i take the customers so i can change them with the edit
 
-    //* the name takes the specific name of the inputs and adds the value like
-    setNewCustomer((prevCustomer) => ({
-      ...prevCustomer,
-      [name]: value,
-    }));
+  // ! testing mode
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [address, setAddress] = useState([
+    {
+      city: "",
+      street: "",
+      customer: {},
+    },
+  ]);
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = event.target.value;
+    setName(newName);
   };
+
+  const handleSurnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newSurname = event.target.value;
+    setSurname(newSurname);
+  };
+
+  const handleAddressChange = (index: any, field: any, value: any) => {
+    const newAddresses = [...address];
+    newAddresses[index] = { ...newAddresses[index], [field]: value };
+    setAddress(newAddresses);
+  };
+
+  // ! testing mode
 
   const submitNewCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
+    // let customerData: any;
+    let customerData = {
+      id: Date.now().toString(),
+      name: name,
+      surname: surname,
+      address: address,
+    };
+
+    // finalStep();
+    console.log(name, surname);
     // check the form if is valid
     dispatch(toggleFetchError(false));
-    if (newCustomer.name === "" || newCustomer.surname === "") return;
+    if (name === "" || surname === "" || address[0].street === "") return;
     // check the form if is valid
 
     try {
+      console.warn(customerData);
       const response = await fetch("http://localhost:8080/Facade/cust/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newCustomer),
+        body: JSON.stringify(customerData),
       });
 
       if (response.ok) {
+        console.log("IT WORKS");
+
+        // savedCustomer is the customer that it comes back from the backend
         const savedCustomer = await response.json();
+        console.log(savedCustomer);
+        console.log("works here");
 
         dispatch(toggleFetchError(false));
 
         // its the object with the info
+        console.warn(customerData);
         console.log(savedCustomer);
+
         dispatch(addCustomer(savedCustomer));
-        setNewCustomer({ name: "", surname: "", address: [] });
+        setName("");
+        setSurname("");
+        setAddress([
+          {
+            city: "",
+            street: "",
+            customer: {},
+          },
+        ]);
+
         navigate("/customers/list");
       } else {
         console.error("Error saving customer data");
@@ -69,7 +120,6 @@ function AddCustomer({ showTitle = true }) {
   };
 
   return (
-    //? here  in colClasses i can change both modal and add-customer component. Maybe i can add something like if to check when its modal or its just the component.
     <CustomContainerRowCol
       containerClasses="container"
       rowClasses="row justify-content-center mt-5"
@@ -77,8 +127,6 @@ function AddCustomer({ showTitle = true }) {
     >
       <div className="card bg-secondary text-white align-items-center">
         <div className="card-body justify-content-center">
-          {/*//? probably delete shadow-sm p-3 mb-5 rounded  */}
-          {/*//? here i make it the showTitle because in few places i don't want to show the title  */}
           {showTitle && (
             <div className="d-flex gap-2  justify-content-center align-items-center shadow-sm  p-3 mb-5 rounded  ">
               {/* <button className="btn btn-success">+</button> */}
@@ -98,8 +146,8 @@ function AddCustomer({ showTitle = true }) {
                 className="form-control"
                 id="name"
                 name="name"
-                value={newCustomer.name}
-                onChange={handleInputChange}
+                value={name}
+                onChange={handleNameChange}
                 required
               />
             </div>
@@ -111,8 +159,8 @@ function AddCustomer({ showTitle = true }) {
                 type="text"
                 className="form-control"
                 name="surname"
-                value={newCustomer.surname}
-                onChange={handleInputChange}
+                value={surname}
+                onChange={handleSurnameChange}
                 required
               />
             </div>
@@ -125,10 +173,12 @@ function AddCustomer({ showTitle = true }) {
                 className="form-control"
                 id="address"
                 name="address"
-                value={newCustomer.address}
-                onChange={handleInputChange}
+                value={address[0].street}
+                onChange={(event) => handleAddressChange(0, "street", event.target.value)}
+                required
               />
             </div>
+
             <div className="text-end mt-4">
               <button type="submit" className="btn btn-primary">
                 Submit
