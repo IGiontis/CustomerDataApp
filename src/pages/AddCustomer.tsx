@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
 import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 import { addCustomer } from "../Redux/customerSlice";
-
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toggleFetchError } from "../Redux/errorSlice";
 
-//! delete
-import CustomerType from "../interfaces/customerTypes";
+import { toggleModal } from "../Redux/modalSlice";
 
 //! IMPORTANT NOTE:
 //* Here i pass the error handler from my reducer but i don't use it. Because when i don't have the server up will say from the beginning that error has been thrown
@@ -19,17 +17,12 @@ import CustomerType from "../interfaces/customerTypes";
 function AddCustomer({ showTitle = true }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const erroHandler = useSelector((state: any) => state.fetchDataError.fetchErrorHandler);
 
-  // ? here i take the customers so i can change them with the edit
-  const customers: CustomerType[] = useSelector((state: any) => state.customers);
-  const test = customers.map((testaki: any) => {
-    console.log(testaki.id);
-  });
+  // !test mode for modal
+  const location = useLocation();
+  const currentUrl = location.pathname;
+  // !test mode for modal
 
-  // ? here i take the customers so i can change them with the edit
-
-  // ! testing mode
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [address, setAddress] = useState([
@@ -40,7 +33,7 @@ function AddCustomer({ showTitle = true }) {
     },
   ]);
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
     setName(newName);
   };
@@ -55,8 +48,6 @@ function AddCustomer({ showTitle = true }) {
     newAddresses[index] = { ...newAddresses[index], [field]: value };
     setAddress(newAddresses);
   };
-
-  // ! testing mode
 
   const submitNewCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,8 +82,6 @@ function AddCustomer({ showTitle = true }) {
         console.log(savedCustomer);
         console.log("works here");
 
-        dispatch(toggleFetchError(false));
-
         // its the object with the info
         console.warn(customerData);
         console.log(savedCustomer);
@@ -107,7 +96,7 @@ function AddCustomer({ showTitle = true }) {
             customer: {},
           },
         ]);
-
+        // dispatch(toggleModal());
         navigate("/customers/list");
       } else {
         console.error("Error saving customer data");
@@ -136,7 +125,7 @@ function AddCustomer({ showTitle = true }) {
             </div>
           )}
 
-          <form className="needs-validation" onSubmit={submitNewCustomer}>
+          <form className="needs-validation">
             <div className="mb-3 mt-4">
               <label htmlFor="name" className="form-label">
                 Name
@@ -174,13 +163,15 @@ function AddCustomer({ showTitle = true }) {
                 id="address"
                 name="address"
                 value={address[0].street}
-                onChange={(event) => handleAddressChange(0, "street", event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleAddressChange(0, "street", event.target.value)
+                }
                 required
               />
             </div>
 
             <div className="text-end mt-4">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary" onClick={submitNewCustomer}>
                 Submit
               </button>
             </div>

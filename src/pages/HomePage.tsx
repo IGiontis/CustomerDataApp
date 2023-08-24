@@ -1,4 +1,5 @@
 import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
+import CustomerModal from "../components/custom/Modal";
 
 function HomePage() {
   return (

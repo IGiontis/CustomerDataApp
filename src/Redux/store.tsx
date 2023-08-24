@@ -12,3 +12,6 @@ const store = configureStore({
 });
 
 export default store;
+
+// This helps me for autocomplete variables also infers to the types of the redux so i don't need to use any
+export type RootState = ReturnType<typeof store.getState>;

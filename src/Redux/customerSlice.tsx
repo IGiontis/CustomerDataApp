@@ -11,17 +11,21 @@ const customerSlice = createSlice({
     setCustomers(state, action) {
       return action.payload;
     },
-    addCustomer(state: any, action) {
+
+    addCustomer(state, action) {
       console.log(action.payload);
       state.push(action.payload);
       console.log(initialState);
     },
 
     editCustomer(state, action) {
-      console.log(action.payload);
+      const index = state.findIndex((item: CustomerType) => item.id === action.payload.customerId);
+      console.log(index);
+      state[index] = action.payload.responseData;
+      console.log(state[index]);
     },
 
-    deleteCustomer(state: any, action) {
+    deleteCustomer(state, action) {
       console.log(action.payload);
       const customerIdToDelete = action.payload;
 
@@ -32,6 +36,6 @@ const customerSlice = createSlice({
   },
 });
 
-export const { setCustomers, addCustomer, deleteCustomer } = customerSlice.actions;
+export const { setCustomers, addCustomer, deleteCustomer, editCustomer } = customerSlice.actions;
 
 export default customerSlice.reducer;

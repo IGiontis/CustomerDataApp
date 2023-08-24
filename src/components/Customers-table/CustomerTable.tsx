@@ -1,40 +1,37 @@
 import { Link } from "react-router-dom";
 import Customer from "./CustomerBody";
-import ModalCustomer from "../custom/ModalCustomer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FetchDataFailed from "../Errors/FetchDataFailed";
+import { RootState } from "../../Redux/store";
+import { toggleModal } from "../../Redux/modalSlice";
+import AddCustomer from "../../pages/AddCustomer";
+import CustomerModal from "../custom/Modal";
 
 function CustomerTable() {
   const fetchErrorHandler = useSelector((state: any) => state.fetchDataError.fetchErrorHandler);
 
+  // ! TEST MODE
+  const dispatch = useDispatch();
+  const showModal = useSelector((state: RootState) => state.modal.showModal);
+
+  // ! TEST MODE
+
+  // -------------------------------------------------------
+  // -------------------------------------------------------
   //* here i use ternary operator to show the data if isn't loading
   return fetchErrorHandler ? (
     <FetchDataFailed />
   ) : (
     <div className="table-responsive-sm">
-      {/*//! test mode here  */}
-      {/* [onHide, closeButton] are react-bootstrap build in value */}
+      <button
+        className="btn btn-success btn-sm mt-4 mb-2 ms-4 "
+        onClick={() => dispatch(toggleModal())}
+      >
+        +New
+      </button>
+      {showModal && <CustomerModal />}
 
-      {/* <Button className="btn btn-warning" onClick={handleShow}>
-        test
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <strong>New Customer</strong>{" "}
-        </Modal.Header>
-        <Modal.Body className="grid-example">
-          <AddCustomer showTitle={false} />
-        </Modal.Body>
-        <Modal.Footer></Modal.Footer>
-      </Modal> */}
-      <ModalCustomer />
-
-      {/*//! test mode here  */}
-
-      <Link to="/customers/list/add-customer">
-        <button className="btn btn-success btn-sm mt-4 mb-2 ms-4 ">+New</button>
-      </Link>
+      {/* here probably it re-renders */}
 
       <table className="table table-striped table-condensed table-bordered">
         {/* Header of the table */}
