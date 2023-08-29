@@ -1,5 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import CustomerType from "../../interfaces/customerTypes";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectCustomer } from "../../Redux/editSlice";
+import { setModalContent, openModal } from "../../Redux/modalSlice";
 
 interface EditButtonTypes {
   classes: string;
@@ -7,13 +10,15 @@ interface EditButtonTypes {
 }
 
 function EditButton({ classes, customer }: EditButtonTypes) {
-  // console.log(customer.id);
-
-  const customerId = customer.id;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const handleCustomerId = async () => {
-    navigate(`/edit-customer/${customerId}`, { state: customer });
+    console.log(customer);
+    dispatch(selectCustomer(customer));
+    dispatch(setModalContent("edit"));
+    navigate(`/customers/list?editCustomerName=${customer.name}&id=${customer.id}`);
+    // dispatch(toggleModal());
+    dispatch(openModal("edit"));
   };
 
   return (

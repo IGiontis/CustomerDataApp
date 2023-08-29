@@ -14,7 +14,7 @@ function AppRoutes() {
         <Route index element={<HomePage />} />
         <Route path="customers/list" element={<Customers />}></Route>
         <Route path="/add-customer" element={<AddCustomer />} />
-        <Route path="/edit-customer/:customerId" element={<EditCustomer />} />
+        {/* <Route path="/edit-customer/:customerId" element={<EditCustomer />} /> */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

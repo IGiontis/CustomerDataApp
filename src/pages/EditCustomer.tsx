@@ -1,24 +1,29 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 import { useDispatch } from "react-redux";
-import { editCustomer } from "../Redux/customerSlice";
 
-function EditCustomer() {
-  const location = useLocation();
-  const customer = location.state;
+import { selectCustomer } from "../Redux/editSlice";
+import { closeModal } from "../Redux/modalSlice";
+import { useNavigate } from "react-router-dom";
+import { updateCustomer } from "../Redux/customerSlice";
+
+// ----------------------------------------------------------------
+function EditCustomer({ customer }: any) {
+  const navigate = useNavigate();
   //! test
   const dispatch = useDispatch();
-  //! test
-  console.log(location);
-  console.log(customer);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(selectCustomer(customer));
+  }, [dispatch, customer]);
+
+  //! test
+
+  console.log(customer);
 
   const [name, setName] = useState(customer.name);
   const [surname, setSurname] = useState(customer.surname);
-  const [address, setAddress] = useState(customer.address);
+  const [address, setAddress] = useState(customer.address || [{ street: "" }]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -39,6 +44,7 @@ function EditCustomer() {
   };
 
   const handleCancel = () => {
+    dispatch(closeModal());
     navigate(-1);
   };
 
@@ -68,11 +74,12 @@ function EditCustomer() {
         console.log("Customer edited:", responseData);
         console.log(editedCustomer);
         // !!test
-        dispatch(editCustomer({ customerId: responseData.id, responseData }));
+        dispatch(updateCustomer(responseData));
         // !!test
 
         // goes to the last /
 
+        dispatch(closeModal());
         navigate(-1);
       }
     } catch (err) {
@@ -84,7 +91,7 @@ function EditCustomer() {
     <CustomContainerRowCol
       containerClasses="container"
       rowClasses="row justify-content-center mt-5"
-      colClasses="col-sm-8 col-md-6 col-lg-5"
+      colClasses="col-sm-8 col-md-7 col-lg-6"
     >
       <div className="card bg-secondary text-white align-items-center">
         <div className="card-body justify-content-center">
@@ -135,7 +142,7 @@ function EditCustomer() {
                 Cancel
               </button>
               <button type="submit" className="btn btn-primary btn-sm" onClick={submitEditCustomer}>
-                Edit Customer
+                Save Customer
               </button>
             </div>
           </form>

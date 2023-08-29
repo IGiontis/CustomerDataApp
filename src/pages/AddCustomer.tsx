@@ -1,11 +1,12 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 import { addCustomer } from "../Redux/customerSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toggleFetchError } from "../Redux/errorSlice";
+import { closeModal } from "../Redux/modalSlice";
 
-import { toggleModal } from "../Redux/modalSlice";
+// import { toggleModal } from "../Redux/modalSlice";
 
 //! IMPORTANT NOTE:
 //* Here i pass the error handler from my reducer but i don't use it. Because when i don't have the server up will say from the beginning that error has been thrown
@@ -19,8 +20,7 @@ function AddCustomer({ showTitle = true }) {
   const navigate = useNavigate();
 
   // !test mode for modal
-  const location = useLocation();
-  const currentUrl = location.pathname;
+
   // !test mode for modal
 
   const [name, setName] = useState("");
@@ -32,6 +32,15 @@ function AddCustomer({ showTitle = true }) {
       customer: {},
     },
   ]);
+  const nameInputRef = useRef<HTMLInputElement | null>(null);
+
+  //* focus
+  useEffect(() => {
+    if (nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, []);
+  //* End focus
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
@@ -59,7 +68,6 @@ function AddCustomer({ showTitle = true }) {
       address: address,
     };
 
-    // finalStep();
     console.log(name, surname);
     // check the form if is valid
     dispatch(toggleFetchError(false));
@@ -75,8 +83,6 @@ function AddCustomer({ showTitle = true }) {
       });
 
       if (response.ok) {
-        console.log("IT WORKS");
-
         // savedCustomer is the customer that it comes back from the backend
         const savedCustomer = await response.json();
         console.log(savedCustomer);
@@ -97,6 +103,7 @@ function AddCustomer({ showTitle = true }) {
           },
         ]);
         // dispatch(toggleModal());
+        dispatch(closeModal());
         navigate("/customers/list");
       } else {
         console.error("Error saving customer data");
@@ -137,6 +144,7 @@ function AddCustomer({ showTitle = true }) {
                 name="name"
                 value={name}
                 onChange={handleNameChange}
+                ref={nameInputRef}
                 required
               />
             </div>

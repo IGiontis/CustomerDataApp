@@ -7,7 +7,6 @@ import CustomerType from "../../interfaces/customerTypes";
 import { toggleFetchError } from "../../Redux/errorSlice";
 import EditButton from "./EditButton";
 import { RootState } from "../../Redux/store";
-import CustomerModal from "../custom/Modal";
 
 function Customer() {
   const dispatch = useDispatch();
@@ -22,12 +21,11 @@ function Customer() {
         try {
           const res = await fetch("http://localhost:8080/Facade/cust/getAll");
           const data = await res.json();
-          // console.log(data);
+          console.log(data);
           dispatch(setCustomers(data));
           dispatch(toggleFetchError(false));
         } catch (error: any) {
           dispatch(toggleFetchError(true));
-          // console.log(error.message);
         }
       }
       fetchCustomersInfo();
