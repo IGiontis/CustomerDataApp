@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { deleteCustomer } from "../../Redux/customerSlice";
+import { Button } from "@mui/material";
 
 interface DeleteButtonProps {
-  classes: string;
+  classes?: string;
   customerId: number;
   customerName: string;
 }
@@ -35,9 +36,20 @@ function DeleteButton({ classes, customerId, customerName }: DeleteButtonProps) 
   };
 
   return (
-    <button className={classes} onClick={handleDeleteClick}>
+    <Button
+      variant="contained"
+      color="error"
+      size="small"
+      onClick={handleDeleteClick}
+      sx={{
+        "@media (max-width:600px)": {
+          fontSize: "10px",
+          padding: "5px 8px",
+        },
+      }}
+    >
       Delete
-    </button>
+    </Button>
   );
 }
 

@@ -3,6 +3,7 @@ import customerReducer from "./customerSlice"; // i can name it whatever i want
 import modalReducer from "./modalSlice";
 import toggleFetchErrorReducer from "./errorSlice";
 import editReducer from "./editSlice";
+import isFetchedReducer from "./isFetched";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     modal: modalReducer,
     fetchDataError: toggleFetchErrorReducer,
     edit: editReducer,
+    isFetched: isFetchedReducer,
   },
 });
 

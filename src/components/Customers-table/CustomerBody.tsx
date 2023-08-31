@@ -7,32 +7,33 @@ import CustomerType from "../../interfaces/customerTypes";
 import { toggleFetchError } from "../../Redux/errorSlice";
 import EditButton from "./EditButton";
 import { RootState } from "../../Redux/store";
+import { setIsFetched } from "../../Redux/isFetched";
 
 function Customer() {
   const dispatch = useDispatch();
 
   //* i don't know what type has the state
   const customers: CustomerType[] = useSelector((state: RootState) => state.customers);
-
+  const isFetched = useSelector((state: RootState) => state.isFetched);
   //* fetching the customers from the backend
-  useEffect(
-    function () {
-      async function fetchCustomersInfo() {
-        try {
+  useEffect(() => {
+    async function fetchCustomersInfo() {
+      try {
+        // Here i check if the first time i have fetched
+        if (!isFetched) {
           const res = await fetch("http://localhost:8080/Facade/cust/getAll");
           const data = await res.json();
           console.log(data);
           dispatch(setCustomers(data));
           dispatch(toggleFetchError(false));
-        } catch (error: any) {
-          dispatch(toggleFetchError(true));
+          dispatch(setIsFetched(true));
         }
+      } catch (error: any) {
+        dispatch(toggleFetchError(true));
       }
-      fetchCustomersInfo();
-      console.log("enter");
-    },
-    [dispatch]
-  );
+    }
+    fetchCustomersInfo();
+  }, [dispatch, isFetched]);
 
   return (
     <tbody>
@@ -56,15 +57,9 @@ function Customer() {
               </div>
             </td>
             <td className="d-flex align-items-center">
-              {/* <button className="btn btn-info btn-sm">edit</button> */}
-              <EditButton classes="btn btn-info btn-sm" customer={person} />
+              <EditButton customer={person} />
               <Separator />
-              {/* <button className="btn btn-danger btn-sm">delete</button> */}
-              <DeleteButton
-                classes="btn btn-danger btn-sm"
-                customerId={person.id}
-                customerName={person.name}
-              />
+              <DeleteButton customerId={person.id} customerName={person.name} />
             </td>
           </tr>
         ))}

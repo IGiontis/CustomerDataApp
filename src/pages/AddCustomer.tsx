@@ -1,12 +1,11 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 import { addCustomer } from "../Redux/customerSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toggleFetchError } from "../Redux/errorSlice";
 import { closeModal } from "../Redux/modalSlice";
-
-// import { toggleModal } from "../Redux/modalSlice";
+import Container from "@mui/material/Container";
+import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 
 //! IMPORTANT NOTE:
 //* Here i pass the error handler from my reducer but i don't use it. Because when i don't have the server up will say from the beginning that error has been thrown
@@ -18,10 +17,7 @@ import { closeModal } from "../Redux/modalSlice";
 function AddCustomer({ showTitle = true }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // !test mode for modal
-
-  // !test mode for modal
+  const location = useLocation();
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -32,6 +28,7 @@ function AddCustomer({ showTitle = true }) {
       customer: {},
     },
   ]);
+
   const nameInputRef = useRef<HTMLInputElement | null>(null);
 
   //* focus
@@ -116,77 +113,89 @@ function AddCustomer({ showTitle = true }) {
   };
 
   return (
-    <CustomContainerRowCol
-      containerClasses="container"
-      rowClasses="row justify-content-center mt-5"
-      colClasses={showTitle ? "col-sm-8 col-md-7 col-lg-6" : '"col-sm-8 col-md-10 col-lg-10 "'}
-    >
-      <div className="card bg-secondary text-white align-items-center">
-        <div className="card-body justify-content-center">
-          {showTitle && (
-            <div className="d-flex gap-2  justify-content-center align-items-center shadow-sm  p-3 mb-5 rounded  ">
-              {/* <button className="btn btn-success">+</button> */}
-              <h5 className="card-title">
-                <strong>New customer</strong>
-              </h5>
-            </div>
-          )}
+    <Container maxWidth="xs">
+      <Paper
+        elevation={12}
+        sx={{
+          padding: 3,
+          borderRadius: 8,
+          marginTop: location.pathname === "/add-customer" ? 7 : 0,
+        }}
+      >
+        <Box
+          display="flex"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
+          boxShadow={4}
+          p={3}
+          mb={5}
+          borderRadius={3}
+        >
+          <Typography variant="h5" component="h2">
+            <strong>New customer</strong>
+          </Typography>
+        </Box>
 
-          <form className="needs-validation">
-            <div className="mb-3 mt-4">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
+        <form>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
                 type="text"
-                className="form-control"
-                id="name"
-                name="name"
+                label="Name"
                 value={name}
                 onChange={handleNameChange}
-                ref={nameInputRef}
+                inputRef={nameInputRef}
+                error={name === ""}
+                helperText={name === "" ? "Name is required" : ""}
+                fullWidth
                 required
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="surname" className="form-label">
-                Surname
-              </label>
-              <input
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 type="text"
-                className="form-control"
-                name="surname"
+                label="Surname"
                 value={surname}
                 onChange={handleSurnameChange}
+                error={surname === ""}
+                helperText={surname === "" ? "Surname is required" : ""}
+                fullWidth
                 required
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="address" className="form-label">
-                Address
-              </label>
-              <input
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
                 type="text"
-                className="form-control"
-                id="address"
-                name="address"
+                label="Address"
                 value={address[0].street}
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
                   handleAddressChange(0, "street", event.target.value)
                 }
+                error={address[0].street === ""}
+                helperText={address[0].street === "" ? "Address is required" : ""}
+                fullWidth
                 required
               />
-            </div>
-
-            <div className="text-end mt-4">
-              <button type="submit" className="btn btn-primary" onClick={submitNewCustomer}>
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </CustomContainerRowCol>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justifyContent="flex-end" alignItems="flex-end">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={submitNewCustomer}
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

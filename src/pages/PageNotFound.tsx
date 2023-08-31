@@ -1,16 +1,14 @@
-import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
+import { Container } from "@mui/material";
 
 function PageNotFound() {
   return (
-    <CustomContainerRowCol
-      containerClasses="container"
-      rowClasses="row justify-content-center"
-      colClasses="col-md-12 col-sm-12"
-    >
+    <Container fixed>
       <div className="text-center mt-4">
-        <strong>Page Not Found</strong>
+        <strong>
+          Page <span className="text-danger text-decoration-underline">NOT </span> Found
+        </strong>
       </div>
-    </CustomContainerRowCol>
+    </Container>
   );
 }
 

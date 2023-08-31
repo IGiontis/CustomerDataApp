@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
-import CustomContainerRowCol from "../components/custom/CustomContainerComponent";
 import { useDispatch } from "react-redux";
-
 import { selectCustomer } from "../Redux/editSlice";
 import { closeModal } from "../Redux/modalSlice";
 import { useNavigate } from "react-router-dom";
 import { updateCustomer } from "../Redux/customerSlice";
+import { Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 // ----------------------------------------------------------------
 function EditCustomer({ customer }: any) {
   const navigate = useNavigate();
-  //! test
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(selectCustomer(customer));
-  }, [dispatch, customer]);
-
-  //! test
-
-  console.log(customer);
 
   const [name, setName] = useState(customer.name);
   const [surname, setSurname] = useState(customer.surname);
   const [address, setAddress] = useState(customer.address || [{ street: "" }]);
+
+  useEffect(() => {
+    dispatch(selectCustomer(customer));
+  }, [dispatch, customer]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -50,6 +45,7 @@ function EditCustomer({ customer }: any) {
 
   const submitEditCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (name === "" || surname === "" || address[0].street === "") return;
 
     // Create the edited customer data object
     let editedCustomer = {
@@ -88,67 +84,85 @@ function EditCustomer({ customer }: any) {
   };
 
   return (
-    <CustomContainerRowCol
-      containerClasses="container"
-      rowClasses="row justify-content-center mt-5"
-      colClasses="col-sm-8 col-md-7 col-lg-6"
-    >
-      <div className="card bg-secondary text-white align-items-center">
-        <div className="card-body justify-content-center">
-          <div className="d-flex gap-2 align-items-center shadow-sm p-3 mb-5 rounded">
-            <h5 className="card-title">
-              <strong>Edit customer</strong>
-            </h5>
-          </div>
-          <form className="col-md-12">
-            <div className="mb-3 mt-4">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
+    <Container maxWidth="lg" sx={{ padding: 2 }}>
+      <Paper
+        elevation={12}
+        sx={{
+          padding: 3,
+          borderRadius: 8,
+        }}
+      >
+        <Box
+          display="flex"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
+          boxShadow={12}
+          p={2}
+          mb={5}
+          borderRadius={3}
+        >
+          <Typography variant="h5" component="h2">
+            <strong>Edit customer</strong>
+          </Typography>
+        </Box>
+
+        <form>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                label="Name"
+                variant="outlined"
+                fullWidth
                 value={name}
                 onChange={handleNameChange}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="surname" className="form-label">
-                Surname
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="surname"
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Surname"
+                variant="outlined"
+                fullWidth
                 value={surname}
                 onChange={handleSurnameChange}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="address" className="form-label">
-                Address
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="address"
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Address"
+                variant="outlined"
+                fullWidth
+                margin="normal"
                 value={address[0].street}
                 onChange={handleAddressChange}
               />
-            </div>
-            <div className="d-flex justify-content-between mt-4">
-              <button type="button" className="btn btn-danger btn-sm" onClick={handleCancel}>
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-primary btn-sm" onClick={submitEditCustomer}>
-                Save Customer
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </CustomContainerRowCol>
+            </Grid>
+            <Grid container direction="row" marginTop={2}>
+              <Grid item xs={6}>
+                <Box display="flex" marginLeft={2}>
+                  <Button variant="contained" color="error" size="small" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Box display="flex" justifyContent="end">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={submitEditCustomer}
+                  >
+                    Save Customer
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

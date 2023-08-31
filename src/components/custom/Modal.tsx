@@ -1,10 +1,10 @@
-import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import EditCustomer from "../../pages/EditCustomer";
 import { closeModal } from "../../Redux/modalSlice";
 import AddCustomer from "../../pages/AddCustomer";
 import { useNavigate } from "react-router-dom";
+import { Modal, Box } from "@mui/material";
 
 const CustomerModal = () => {
   const dispatch = useDispatch();
@@ -14,18 +14,28 @@ const CustomerModal = () => {
   const navigate = useNavigate();
 
   const closeModalHandler = () => {
-    // dispatch(toggleModal());
     dispatch(closeModal());
     navigate(-1);
   };
 
   return (
-    <Modal show={showModal} onHide={closeModalHandler} centered>
-      <Modal.Header closeButton></Modal.Header>
-      {/* <Modal.Body> */}
-      {modalContent === "edit" && <EditCustomer customer={selectedCustomer} />}
-      {modalContent === "add" && <AddCustomer />}
-      {/* </Modal.Body> */}
+    <Modal open={showModal} onClose={closeModalHandler}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "40%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "80%",
+          maxWidth: "400px",
+          // boxShadow: 24,
+          // p: 4,
+          // borderRadius: 4,
+        }}
+      >
+        {modalContent === "edit" && <EditCustomer customer={selectedCustomer} />}
+        {modalContent === "add" && <AddCustomer />}
+      </Box>
     </Modal>
   );
 };

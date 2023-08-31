@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectCustomer } from "../../Redux/editSlice";
 import { setModalContent, openModal } from "../../Redux/modalSlice";
+import { Button } from "@mui/material";
 
 interface EditButtonTypes {
-  classes: string;
+  classes?: string;
   customer: CustomerType;
 }
 
-function EditButton({ classes, customer }: EditButtonTypes) {
+function EditButton({ customer }: EditButtonTypes) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleCustomerId = async () => {
@@ -22,9 +23,20 @@ function EditButton({ classes, customer }: EditButtonTypes) {
   };
 
   return (
-    <button className={classes} onClick={handleCustomerId}>
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      onClick={handleCustomerId}
+      sx={{
+        "@media (max-width:600px)": {
+          fontSize: "10px",
+          padding: "5px 8px",
+        },
+      }}
+    >
       Edit
-    </button>
+    </Button>
   );
 }
 
