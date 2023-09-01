@@ -1,21 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
-import customerReducer from "./customerSlice"; // i can name it whatever i want
+import { combineReducers } from "redux"; // Import combineReducers
+
+import customerReducer from "./customerSlice";
 import modalReducer from "./modalSlice";
 import toggleFetchErrorReducer from "./errorSlice";
 import editReducer from "./editSlice";
 import isFetchedReducer from "./isFetched";
 
+// Combine all your reducers
+const rootReducer = combineReducers({
+  customers: customerReducer,
+  modal: modalReducer,
+  fetchDataError: toggleFetchErrorReducer,
+  edit: editReducer,
+  isFetched: isFetchedReducer,
+});
+
 const store = configureStore({
-  reducer: {
-    customers: customerReducer,
-    modal: modalReducer,
-    fetchDataError: toggleFetchErrorReducer,
-    edit: editReducer,
-    isFetched: isFetchedReducer,
-  },
+  reducer: rootReducer,
 });
 
 export default store;
-
-// This helps me for autocomplete variables also infers to the types of the redux so i don't need to use any
 export type RootState = ReturnType<typeof store.getState>;

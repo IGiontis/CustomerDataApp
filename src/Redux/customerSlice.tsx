@@ -1,5 +1,5 @@
-// customerSlice.js
 import { createSlice } from "@reduxjs/toolkit";
+
 import CustomerType from "../interfaces/customerTypes";
 
 const initialState: CustomerType[] = [];
