@@ -1,39 +1,30 @@
-import { useEffect } from "react";
 import Separator from "../custom/Separator";
 import { useDispatch, useSelector } from "react-redux";
-import { setCustomers } from "../../Redux/customerSlice";
 import DeleteButton from "./DeleteButton";
 import CustomerType from "../../interfaces/customerTypes";
-import { toggleFetchError } from "../../Redux/errorSlice";
 import EditButton from "./EditButton";
 import { RootState } from "../../Redux/store";
+import { useEffect } from "react";
 import { setIsFetched } from "../../Redux/isFetched";
 
 function Customer() {
   const dispatch = useDispatch();
 
-  //* i don't know what type has the state
   const customers: CustomerType[] = useSelector((state: RootState) => state.customers);
   const isFetched = useSelector((state: RootState) => state.isFetched);
-  //* fetching the customers from the backend
   useEffect(() => {
-    async function fetchCustomersInfo() {
-      try {
-        // Here i check if the first time i have fetched
-        if (!isFetched) {
-          const res = await fetch("http://localhost:8080/Facade/cust/getAll");
-          const data = await res.json();
-          console.log(data);
-          dispatch(setCustomers(data));
-          dispatch(toggleFetchError(false));
-          dispatch(setIsFetched(true));
-        }
-      } catch (error: any) {
-        dispatch(toggleFetchError(true));
-      }
+    if (!isFetched) {
+      dispatch({ type: "FETCH_CUSTOMERS" });
+      dispatch(setIsFetched(true));
     }
-    fetchCustomersInfo();
   }, [dispatch, isFetched]);
+
+  //! Delete later this, is testing mode
+  dispatch({ type: "testaki" });
+  dispatch({ type: "paok" });
+  //! Delete later this, is testing mode
+
+  //? Here i need to make a loader that will wait until we get an error or the fetched data.
 
   return (
     <tbody>

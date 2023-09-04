@@ -2,7 +2,7 @@ import Customer from "./CustomerBody";
 import { useDispatch, useSelector } from "react-redux";
 import FetchDataFailed from "../Errors/FetchDataFailed";
 import { RootState } from "../../Redux/store";
-import { setModalContent, openModal } from "../../Redux/modalSlice";
+import { openModal } from "../../Redux/modalSlice";
 import CustomerModal from "../custom/Modal";
 import { useNavigate } from "react-router-dom";
 import { Button, Grid, Paper } from "@mui/material";
@@ -10,13 +10,13 @@ import { Button, Grid, Paper } from "@mui/material";
 function CustomerTable() {
   const fetchErrorHandler = useSelector((state: any) => state.fetchDataError.fetchErrorHandler);
   const navigate = useNavigate();
+
   // ! TEST MODE
   const dispatch = useDispatch();
   const showModal = useSelector((state: RootState) => state.modal.showModal);
 
   // ! TEST MODE
   const handleAddNewButton = () => {
-    dispatch(setModalContent("add"));
     dispatch(openModal("add"));
     navigate(`/customers/list?AddNewCustomer=`);
   };

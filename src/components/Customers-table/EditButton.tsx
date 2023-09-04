@@ -2,7 +2,7 @@ import CustomerType from "../../interfaces/customerTypes";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectCustomer } from "../../Redux/editSlice";
-import { setModalContent, openModal } from "../../Redux/modalSlice";
+import { openModal } from "../../Redux/modalSlice";
 import { Button } from "@mui/material";
 
 interface EditButtonTypes {
@@ -16,9 +16,8 @@ function EditButton({ customer }: EditButtonTypes) {
   const handleCustomerId = async () => {
     console.log(customer);
     dispatch(selectCustomer(customer));
-    dispatch(setModalContent("edit"));
+    // dispatch(setModalContent("edit"));
     navigate(`/customers/list?editCustomerName=${customer.name}&id=${customer.id}`);
-    // dispatch(toggleModal());
     dispatch(openModal("edit"));
   };
 

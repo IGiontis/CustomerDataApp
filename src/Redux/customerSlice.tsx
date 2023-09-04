@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
 
 import CustomerType from "../interfaces/customerTypes";
 
@@ -38,5 +38,5 @@ const customerSlice = createSlice({
 });
 
 export const { setCustomers, addCustomer, deleteCustomer, updateCustomer } = customerSlice.actions;
-
+export const fetchCustomers = createAction("customer/fetchCustomers");
 export default customerSlice.reducer;
