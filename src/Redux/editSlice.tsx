@@ -6,14 +6,12 @@ const editSlice = createSlice({
   reducers: {
     selectCustomer(state, action) {
       console.log(action.payload);
+      console.log(state);
       return action.payload;
-    },
-    clearSelectedCustomer(state) {
-      return null;
     },
   },
 });
 
-export const { selectCustomer, clearSelectedCustomer } = editSlice.actions;
+export const { selectCustomer } = editSlice.actions;
 
 export default editSlice.reducer;

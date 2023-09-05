@@ -1,16 +1,24 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { updateCustomer } from "../customerSlice";
 import { closeModal } from "../modalSlice";
+import { startLoading, stopLoading } from "../loaderSlice";
 
 function* editCustomerSaga(action: any): Generator<any, void, any> {
   try {
+    yield put(startLoading());
+
+    console.log(action);
     const { name, surname, address, id } = action.payload;
 
     const editedCustomer = {
+      ...action.payload,
       name,
       surname,
       address,
     };
+
+    console.log(editedCustomer);
+    console.log(id);
 
     const response = yield call(fetch, `http://localhost:8080/Facade/cust/update/${id}`, {
       method: "PUT",
@@ -20,10 +28,14 @@ function* editCustomerSaga(action: any): Generator<any, void, any> {
       body: JSON.stringify(editedCustomer),
     });
 
+    console.log(response);
+
     if (response.ok) {
+      console.log("test");
       const responseData = yield response.json();
       yield put(updateCustomer(responseData));
       yield put(closeModal());
+      yield put(stopLoading());
     }
   } catch (error) {
     console.log(error);
@@ -31,5 +43,5 @@ function* editCustomerSaga(action: any): Generator<any, void, any> {
 }
 
 export default function* watchEditCustomer() {
-  yield takeEvery("EDIT_CUSTOMERS", editCustomerSaga);
+  yield takeLatest("EDIT_CUSTOMERS", editCustomerSaga);
 }

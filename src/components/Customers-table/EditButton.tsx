@@ -16,7 +16,6 @@ function EditButton({ customer }: EditButtonTypes) {
   const handleCustomerId = async () => {
     console.log(customer);
     dispatch(selectCustomer(customer));
-    // dispatch(setModalContent("edit"));
     navigate(`/customers/list?editCustomerName=${customer.name}&id=${customer.id}`);
     dispatch(openModal("edit"));
   };

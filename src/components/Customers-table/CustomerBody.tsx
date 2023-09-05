@@ -12,6 +12,8 @@ function Customer() {
 
   const customers: CustomerType[] = useSelector((state: RootState) => state.customers);
   const isFetched = useSelector((state: RootState) => state.isFetched);
+
+  //* This useEffect is for fetching only for the first time
   useEffect(() => {
     if (!isFetched) {
       dispatch({ type: "FETCH_CUSTOMERS" });
@@ -20,8 +22,8 @@ function Customer() {
   }, [dispatch, isFetched]);
 
   //! Delete later this, is testing mode
-  dispatch({ type: "testaki" });
-  dispatch({ type: "paok" });
+  // dispatch({ type: "testaki" });
+  // dispatch({ type: "paok" });
   //! Delete later this, is testing mode
 
   //? Here i need to make a loader that will wait until we get an error or the fetched data.

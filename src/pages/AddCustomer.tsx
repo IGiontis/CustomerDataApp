@@ -1,9 +1,7 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addCustomer } from "../Redux/customerSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toggleFetchError } from "../Redux/errorSlice";
-import { closeModal } from "../Redux/modalSlice";
 import Container from "@mui/material/Container";
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 
@@ -14,7 +12,7 @@ import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
-function AddCustomer({ showTitle = true }) {
+function AddCustomer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,49 +65,22 @@ function AddCustomer({ showTitle = true }) {
 
     console.log(name, surname);
     // check the form if is valid
-    dispatch(toggleFetchError(false));
+    // ! change it to false
+    // dispatch(toggleFetchError(false));
     if (name === "" || surname === "" || address[0].street === "") return;
-    // check the form if is valid
 
-    try {
-      console.warn(customerData);
-      const response = await fetch("http://localhost:8080/Facade/cust/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(customerData),
-      });
+    dispatch({ type: "ADD_CUSTOMER", payload: customerData });
+    navigate("/customers/list");
 
-      if (response.ok) {
-        // savedCustomer is the customer that it comes back from the backend
-        const savedCustomer = await response.json();
-        console.log(savedCustomer);
-        console.log("works here");
-
-        // its the object with the info
-        console.warn(customerData);
-        console.log(savedCustomer);
-
-        dispatch(addCustomer(savedCustomer));
-        setName("");
-        setSurname("");
-        setAddress([
-          {
-            city: "",
-            street: "",
-            customer: {},
-          },
-        ]);
-        // dispatch(toggleModal());
-        dispatch(closeModal());
-        navigate("/customers/list");
-      } else {
-        console.error("Error saving customer data");
-        dispatch(toggleFetchError(true));
-      }
-    } catch (error) {
-      dispatch(toggleFetchError(true));
-      console.error("An error occurred:", error);
-    }
+    setName("");
+    setSurname("");
+    setAddress([
+      {
+        city: "",
+        street: "",
+        customer: {},
+      },
+    ]);
   };
 
   return (

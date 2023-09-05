@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { selectCustomer } from "../Redux/editSlice";
 import { closeModal } from "../Redux/modalSlice";
 import { useNavigate } from "react-router-dom";
-import { updateCustomer } from "../Redux/customerSlice";
 import { Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -15,10 +13,7 @@ function EditCustomer({ customer }: any) {
   const [name, setName] = useState(customer.name);
   const [surname, setSurname] = useState(customer.surname);
   const [address, setAddress] = useState(customer.address || [{ street: "" }]);
-
-  useEffect(() => {
-    dispatch(selectCustomer(customer));
-  }, [dispatch, customer]);
+  console.log(customer);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -43,7 +38,7 @@ function EditCustomer({ customer }: any) {
     navigate(-1);
   };
 
-  const submitEditCustomer = async (e: React.FormEvent) => {
+  const submitEditCustomer = (e: React.FormEvent) => {
     e.preventDefault();
     if (name === "" || surname === "" || address[0].street === "") return;
 
@@ -54,33 +49,9 @@ function EditCustomer({ customer }: any) {
       surname: surname,
       address: address,
     };
-
-    try {
-      const response = await fetch(
-        `http://localhost:8080/Facade/cust/update/${editedCustomer.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(editedCustomer),
-        }
-      );
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Customer edited:", responseData);
-        console.log(editedCustomer);
-        // !!test
-        dispatch(updateCustomer(responseData));
-        // !!test
-
-        // goes to the last /
-
-        dispatch(closeModal());
-        navigate(-1);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch({ type: "EDIT_CUSTOMERS", payload: editedCustomer });
+    // dispatch(updateCustomer(editedCustomer));
+    navigate(-1);
   };
 
   return (

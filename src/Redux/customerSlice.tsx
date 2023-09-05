@@ -1,5 +1,4 @@
-import { createSlice, createAction } from "@reduxjs/toolkit";
-
+import { createSlice } from "@reduxjs/toolkit";
 import CustomerType from "../interfaces/customerTypes";
 
 const initialState: CustomerType[] = [];
@@ -12,7 +11,7 @@ const customerSlice = createSlice({
       return action.payload;
     },
 
-    addCustomer(state, action) {
+    addCustomerSuccess(state, action) {
       console.log(action.payload);
       state.push(action.payload);
       console.log(initialState);
@@ -37,6 +36,12 @@ const customerSlice = createSlice({
   },
 });
 
-export const { setCustomers, addCustomer, deleteCustomer, updateCustomer } = customerSlice.actions;
-export const fetchCustomers = createAction("customer/fetchCustomers");
+export const {
+  setCustomers,
+  addCustomerSuccess,
+
+  deleteCustomer,
+  updateCustomer,
+} = customerSlice.actions;
+// export const fetchCustomers = createAction("customer/fetchCustomers");
 export default customerSlice.reducer;

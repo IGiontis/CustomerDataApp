@@ -24,6 +24,7 @@ const sagaMiddleWare = createSagaMiddleware();
 
 const store = configureStore({
   reducer: rootReducer,
+
   middleware: [sagaMiddleWare],
 });
 
