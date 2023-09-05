@@ -6,6 +6,7 @@ import EditButton from "./EditButton";
 import { RootState } from "../../Redux/store";
 import { useEffect } from "react";
 import { setIsFetched } from "../../Redux/isFetched";
+import { FETCH_CUSTOMERS } from "../../Redux/Redux-Saga/ActionTypes/ActionTypes";
 
 function Customer() {
   const dispatch = useDispatch();
@@ -16,15 +17,10 @@ function Customer() {
   //* This useEffect is for fetching only for the first time
   useEffect(() => {
     if (!isFetched) {
-      dispatch({ type: "FETCH_CUSTOMERS" });
+      dispatch({ type: FETCH_CUSTOMERS });
       dispatch(setIsFetched(true));
     }
   }, [dispatch, isFetched]);
-
-  //! Delete later this, is testing mode
-  // dispatch({ type: "testaki" });
-  // dispatch({ type: "paok" });
-  //! Delete later this, is testing mode
 
   //? Here i need to make a loader that will wait until we get an error or the fetched data.
 

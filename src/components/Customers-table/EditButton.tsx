@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { selectCustomer } from "../../Redux/editSlice";
 import { openModal } from "../../Redux/modalSlice";
 import { Button } from "@mui/material";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 interface EditButtonTypes {
   classes?: string;
@@ -33,7 +34,7 @@ function EditButton({ customer }: EditButtonTypes) {
         },
       }}
     >
-      Edit
+      <EditNoteIcon />
     </Button>
   );
 }

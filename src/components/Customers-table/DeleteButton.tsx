@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import { DELETE_CUSTOMERS } from "../../Redux/Redux-Saga/ActionTypes/ActionTypes";
 interface DeleteButtonProps {
   classes?: string;
   customerId: number;
@@ -17,7 +18,7 @@ function DeleteButton({ classes, customerId, customerName }: DeleteButtonProps) 
     );
 
     if (deleteConfirmation) {
-      dispatch({ type: "DELETE_CUSTOMERS", payload: customerId });
+      dispatch({ type: DELETE_CUSTOMERS, payload: customerId });
     }
   };
 
@@ -34,7 +35,7 @@ function DeleteButton({ classes, customerId, customerName }: DeleteButtonProps) 
         },
       }}
     >
-      Delete
+      <DeleteIcon />
     </Button>
   );
 }

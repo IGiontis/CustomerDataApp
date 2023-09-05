@@ -4,6 +4,7 @@ import { closeModal } from "../Redux/modalSlice";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { EDIT_CUSTOMERS } from "../Redux/Redux-Saga/ActionTypes/ActionTypes";
 
 // ----------------------------------------------------------------
 function EditCustomer({ customer }: any) {
@@ -49,7 +50,7 @@ function EditCustomer({ customer }: any) {
       surname: surname,
       address: address,
     };
-    dispatch({ type: "EDIT_CUSTOMERS", payload: editedCustomer });
+    dispatch({ type: EDIT_CUSTOMERS, payload: editedCustomer });
     // dispatch(updateCustomer(editedCustomer));
     navigate(-1);
   };

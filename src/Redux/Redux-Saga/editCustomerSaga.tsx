@@ -2,8 +2,19 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { updateCustomer } from "../customerSlice";
 import { closeModal } from "../modalSlice";
 import { startLoading, stopLoading } from "../loaderSlice";
+import { EDIT_CUSTOMERS } from "./ActionTypes/ActionTypes";
 
-function* editCustomerSaga(action: any): Generator<any, void, any> {
+interface EditCustomerAction {
+  type: typeof EDIT_CUSTOMERS;
+  payload: {
+    name: string;
+    surname: string;
+    address: string;
+    id: number;
+  };
+}
+
+function* editCustomerSaga(action: EditCustomerAction): Generator<any, void, any> {
   try {
     yield put(startLoading());
 
@@ -43,5 +54,5 @@ function* editCustomerSaga(action: any): Generator<any, void, any> {
 }
 
 export default function* watchEditCustomer() {
-  yield takeLatest("EDIT_CUSTOMERS", editCustomerSaga);
+  yield takeLatest(EDIT_CUSTOMERS, editCustomerSaga);
 }

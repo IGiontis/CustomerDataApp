@@ -2,6 +2,8 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { setCustomers } from "../customerSlice";
 import { startLoading, stopLoading } from "../loaderSlice";
 import { setErrorMessage, toggleFetchError } from "../errorSlice";
+import { setIsFetched } from "../isFetched";
+import { FETCH_CUSTOMERS } from "./ActionTypes/ActionTypes";
 
 function fetchData() {
   return fetch("http://localhost:8080/Facade/cust/getAll");
@@ -9,23 +11,20 @@ function fetchData() {
 
 function* fetchCustomersSaga(): any {
   try {
-    console.log("fetched");
     yield put(startLoading());
     const response = yield call(fetchData);
     const data = yield response.json();
-
     yield put(setCustomers(data));
-
-    console.log("stopped fetching data and loading");
   } catch (error) {
-    const customErrorMessage = "while fetching data, try again";
+    const customErrorMessage = "Fetch data failed, try again";
     yield put(setErrorMessage(customErrorMessage));
     yield put(toggleFetchError(true));
+    yield put(setIsFetched(false));
   } finally {
     yield put(stopLoading());
   }
 }
 
 export function* watchFetchCustomers() {
-  yield takeEvery("FETCH_CUSTOMERS", fetchCustomersSaga);
+  yield takeEvery(FETCH_CUSTOMERS, fetchCustomersSaga);
 }

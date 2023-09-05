@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toggleFetchError } from "../Redux/errorSlice";
 import Container from "@mui/material/Container";
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { ADD_CUSTOMER } from "../Redux/Redux-Saga/ActionTypes/ActionTypes";
 
 //! IMPORTANT NOTE:
 //* Here i pass the error handler from my reducer but i don't use it. Because when i don't have the server up will say from the beginning that error has been thrown
@@ -69,7 +69,7 @@ function AddCustomer() {
     // dispatch(toggleFetchError(false));
     if (name === "" || surname === "" || address[0].street === "") return;
 
-    dispatch({ type: "ADD_CUSTOMER", payload: customerData });
+    dispatch({ type: ADD_CUSTOMER, payload: customerData });
     navigate("/customers/list");
 
     setName("");
