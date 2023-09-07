@@ -9,13 +9,13 @@ import { Modal, Box } from "@mui/material";
 const CustomerModal = () => {
   const dispatch = useDispatch();
   const showModal = useSelector((state: RootState) => state.modal.showModal);
-  const selectedCustomer = useSelector((state: RootState) => state.edit);
+  // const selectedCustomer = useSelector((state: RootState) => state.edit);
   const modalContent = useSelector((state: RootState) => state.modal.modalContent);
   const navigate = useNavigate();
 
   const closeModalHandler = () => {
     dispatch(closeModal());
-    navigate(-1);
+    navigate("/customers/list");
   };
 
   return (
@@ -33,7 +33,7 @@ const CustomerModal = () => {
           // borderRadius: 4,
         }}
       >
-        {modalContent === "edit" && <EditCustomer customer={selectedCustomer} />}
+        {modalContent === "edit" && <EditCustomer />}
         {modalContent === "add" && <AddCustomer />}
       </Box>
     </Modal>

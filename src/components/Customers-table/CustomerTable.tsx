@@ -45,13 +45,16 @@ function CustomerTable() {
             style={{ maxHeight: "500px" }}
           >
             <table className="table table-striped table-condensed table-bordered">
-              <thead className="thead-light">
+              <thead className="thead-light sticky-top">
                 <tr>
                   <th scope="col">Id</th>
                   <th scope="col">Name</th>
                   <th scope="col">Surname</th>
-                  <th scope="col" className="col-sm-6 col-md-4 col-lg-4">
+                  <th scope="col" className="col-sm-6 col-md-4 col-lg-3">
                     Addresses
+                  </th>
+                  <th scope="col" className="col-sm-6 col-md-1 col-lg-1">
+                    File
                   </th>
                   <th scope="col" className="col-sm-1 col-md-2 col-lg-1">
                     Actions

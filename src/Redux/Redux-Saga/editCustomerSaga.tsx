@@ -3,6 +3,7 @@ import { updateCustomer } from "../customerSlice";
 import { closeModal } from "../modalSlice";
 import { startLoading, stopLoading } from "../loaderSlice";
 import { EDIT_CUSTOMERS } from "./ActionTypes/ActionTypes";
+import { setErrorMessage } from "../errorSlice";
 
 interface EditCustomerAction {
   type: typeof EDIT_CUSTOMERS;
@@ -44,12 +45,25 @@ function* editCustomerSaga(action: EditCustomerAction): Generator<any, void, any
     if (response.ok) {
       console.log("test");
       const responseData = yield response.json();
+      console.log(`here is the response data: ${responseData}`);
+      console.log(responseData);
+      // Here i send to the edit the hole object  of a single customer
+
+      // !
+
+      // Perform your manipulations on responseData here
+      responseData.someNewProperty = "New Value";
+      // !
+      console.log(responseData);
       yield put(updateCustomer(responseData));
       yield put(closeModal());
-      yield put(stopLoading());
     }
   } catch (error) {
     console.log(error);
+    const errorMessage = "Something went wrong while updating customer, please try again";
+    yield put(setErrorMessage(errorMessage));
+  } finally {
+    yield put(stopLoading());
   }
 }
 

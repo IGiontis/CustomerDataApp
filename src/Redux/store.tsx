@@ -10,6 +10,10 @@ import createSagaMiddleware from "@redux-saga/core";
 import isLoadingReducer from "./loaderSlice";
 import rootSaga from "./Redux-Saga/sagaStore";
 
+// !delete
+import testUpload from "./uploadSlice";
+// !delete
+
 // Combine all your reducers
 const rootReducer = combineReducers({
   customers: customerReducer,
@@ -18,6 +22,7 @@ const rootReducer = combineReducers({
   edit: editReducer,
   isFetched: isFetchedReducer,
   isLoading: isLoadingReducer,
+  upload: testUpload,
 });
 
 const sagaMiddleWare = createSagaMiddleware();

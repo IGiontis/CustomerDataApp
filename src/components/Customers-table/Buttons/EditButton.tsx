@@ -1,10 +1,11 @@
-import CustomerType from "../../interfaces/customerTypes";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectCustomer } from "../../Redux/editSlice";
-import { openModal } from "../../Redux/modalSlice";
+
 import { Button } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { openModal } from "../../../Redux/modalSlice";
+import { selectCustomer } from "../../../Redux/editSlice";
+import CustomerType from "../../../interfaces/customerTypes";
 
 interface EditButtonTypes {
   classes?: string;
@@ -14,7 +15,11 @@ interface EditButtonTypes {
 function EditButton({ customer }: EditButtonTypes) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleCustomerId = async () => {
+  // console.error("works");
+  //! Here the bug is that the button runs automatically when the form is loaded
+
+  const handleCustomerId = () => {
+    console.warn("test edit");
     console.log(customer);
     dispatch(selectCustomer(customer));
     navigate(`/customers/list?editCustomerName=${customer.name}&id=${customer.id}`);

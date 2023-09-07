@@ -9,6 +9,7 @@ import { ADD_CUSTOMER } from "./ActionTypes/ActionTypes";
 function* addCustomerSaga(customerData: any): Generator<any, void, any> {
   console.log(customerData);
   const customerDataSaga = customerData.payload;
+
   try {
     yield put(startLoading());
     // yield put(startLoading());

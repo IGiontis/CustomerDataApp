@@ -5,10 +5,11 @@ import { useNavigate } from "react-router";
 
 function FetchDataFailed() {
   const navigate = useNavigate();
+
   const errorMessage = useSelector((state: RootState) => state.fetchDataError.errorMessage);
 
   const handleErrorButton = () => {
-    navigate(-1);
+    navigate("/customer/list");
   };
   return (
     <div className="fw-bold text-center mt-5 font-monospace ">

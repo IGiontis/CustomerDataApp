@@ -20,9 +20,10 @@ const customerSlice = createSlice({
     updateCustomer(state, action) {
       const editedCustomer = action.payload;
       const index = state.findIndex((customer) => customer.id === editedCustomer.id);
-      if (index !== -1) {
-        state[index] = editedCustomer;
-      }
+      console.log(index);
+      // if (index !== -1) {
+      state[index] = editedCustomer;
+      // }
     },
 
     deleteCustomer(state, action) {

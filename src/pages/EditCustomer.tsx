@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../Redux/modalSlice";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { EDIT_CUSTOMERS } from "../Redux/Redux-Saga/ActionTypes/ActionTypes";
+import { RootState } from "../Redux/store";
+import CustomerType from "../interfaces/customerTypes";
 
 // ----------------------------------------------------------------
-function EditCustomer({ customer }: any) {
+function EditCustomer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // console.log(customer);
 
-  const [name, setName] = useState(customer.name);
-  const [surname, setSurname] = useState(customer.surname);
-  const [address, setAddress] = useState(customer.address || [{ street: "" }]);
-  console.log(customer);
+  // !delete
+  const customer = useSelector<RootState, CustomerType | null>((state) => state.edit);
+
+  // !delete
+
+  // * In Redux, the useSelector hook allows you to select a piece of the application state. The first generic argument <RootState> specifies the type of your entire Redux store state. The second generic argument <CustomerType | null> specifies the type of the specific piece of state you're selecting. In your case, you want to select the state.edit property, which may be of type CustomerType or null.
+
+  const [name, setName] = useState(customer?.name);
+  const [surname, setSurname] = useState(customer?.surname);
+  const [address, setAddress] = useState(customer?.address || [{ street: "" }]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -51,8 +60,8 @@ function EditCustomer({ customer }: any) {
       address: address,
     };
     dispatch({ type: EDIT_CUSTOMERS, payload: editedCustomer });
-    // dispatch(updateCustomer(editedCustomer));
-    navigate(-1);
+
+    navigate("/customers/list");
   };
 
   return (
