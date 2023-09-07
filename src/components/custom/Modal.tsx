@@ -15,7 +15,7 @@ const CustomerModal = () => {
 
   const closeModalHandler = () => {
     dispatch(closeModal());
-    navigate("/customers/list");
+    navigate(-1);
   };
 
   return (

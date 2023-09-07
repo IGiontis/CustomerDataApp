@@ -15,11 +15,11 @@ function* fetchCustomersSaga(): any {
     const response = yield call(fetchData);
     const data = yield response.json();
     yield put(setCustomers(data));
+    yield put(setIsFetched(true));
   } catch (error) {
     const customErrorMessage = "Fetch data failed, try again";
     yield put(setErrorMessage(customErrorMessage));
     yield put(toggleFetchError(true));
-    yield put(setIsFetched(false));
   } finally {
     yield put(stopLoading());
   }

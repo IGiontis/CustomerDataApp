@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { openModal } from "../../../Redux/modalSlice";
 import { selectCustomer } from "../../../Redux/editSlice";
+
 import CustomerType from "../../../interfaces/customerTypes";
 
 interface EditButtonTypes {
