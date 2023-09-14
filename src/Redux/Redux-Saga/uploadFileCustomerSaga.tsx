@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { updateCustomer } from "../customerSlice";
 import { closeModal } from "../modalSlice";
 import { startLoading, stopLoading } from "../loaderSlice";
-import { EDIT_CUSTOMERS } from "./ActionTypes/ActionTypes";
+import { EDIT_CUSTOMERS, UPLOAD_FILE_CUSTOMER } from "./ActionTypes/ActionTypes";
 import { setErrorMessage } from "../errorSlice";
 import { setIsFetched } from "../isFetched";
 
@@ -13,40 +13,35 @@ interface EditCustomerAction {
     surname: string;
     address: string;
     id: number;
-    content?: File;
+    uploadFile?: File;
   };
 }
 
-function* editCustomerSaga(action: EditCustomerAction): Generator<any, void, any> {
+function* uploadFileCustomerSaga(action: EditCustomerAction): Generator<any, void, any> {
   try {
     yield put(startLoading());
-
-    const { name, surname, address, id, content } = action.payload;
+    const { name, surname, address, id, uploadFile } = action.payload;
 
     const editedCustomer = {
       ...action.payload,
       name,
       surname,
       address,
-      content,
+      uploadFile,
     };
-
-    const formData = new FormData();
-
-    formData.append("customerData", JSON.stringify(editedCustomer));
-
-    if (editedCustomer.content) {
-      formData.append("file_0", editedCustomer.content);
-    }
 
     const response = yield call(fetch, `http://localhost:8080/Facade/cust/update/${id}`, {
       method: "PUT",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedCustomer),
     });
 
     if (response.ok) {
       const responseData = yield response.json();
       // Here i send to the edit the hole object  of a single customer
+
       yield put(updateCustomer(responseData));
       yield put(closeModal());
     }
@@ -60,5 +55,5 @@ function* editCustomerSaga(action: EditCustomerAction): Generator<any, void, any
 }
 
 export default function* watchEditCustomer() {
-  yield takeLatest(EDIT_CUSTOMERS, editCustomerSaga);
+  yield takeLatest(UPLOAD_FILE_CUSTOMER, uploadFileCustomerSaga);
 }

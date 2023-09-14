@@ -5,7 +5,6 @@ const editSlice = createSlice({
   initialState: null,
   reducers: {
     selectCustomer(state, action) {
-      console.log(action.payload);
       return action.payload;
     },
   },

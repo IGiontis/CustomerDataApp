@@ -9,7 +9,7 @@ function FetchDataFailed() {
   const errorMessage = useSelector((state: RootState) => state.fetchDataError.errorMessage);
 
   const handleErrorButton = () => {
-    navigate("/customer/list");
+    navigate("/customers/list");
   };
   return (
     <div className="fw-bold text-center mt-5 font-monospace ">

@@ -2,7 +2,6 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { setCustomers } from "../customerSlice";
 import { startLoading, stopLoading } from "../loaderSlice";
 import { setErrorMessage, toggleFetchError } from "../errorSlice";
-import { setIsFetched } from "../isFetched";
 import { FETCH_CUSTOMERS } from "./ActionTypes/ActionTypes";
 
 function fetchData() {
@@ -13,9 +12,9 @@ function* fetchCustomersSaga(): any {
   try {
     yield put(startLoading());
     const response = yield call(fetchData);
+
     const data = yield response.json();
     yield put(setCustomers(data));
-    yield put(setIsFetched(true));
   } catch (error) {
     const customErrorMessage = "Fetch data failed, try again";
     yield put(setErrorMessage(customErrorMessage));

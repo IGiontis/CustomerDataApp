@@ -10,7 +10,5 @@ export default interface CustomerType {
       customer: {};
     }
   ];
-  // !this must be deleted
-  uploadedFiles?: File;
-  // !this must be deleted
+  content?: File;
 }

@@ -12,12 +12,7 @@ import CustomerType from "../interfaces/customerTypes";
 function EditCustomer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log(customer);
-
-  // !delete
   const customer = useSelector<RootState, CustomerType | null>((state) => state.edit);
-
-  // !delete
 
   // * In Redux, the useSelector hook allows you to select a piece of the application state. The first generic argument <RootState> specifies the type of your entire Redux store state. The second generic argument <CustomerType | null> specifies the type of the specific piece of state you're selecting. In your case, you want to select the state.edit property, which may be of type CustomerType or null.
 
@@ -118,6 +113,11 @@ function EditCustomer() {
                 onChange={handleAddressChange}
               />
             </Grid>
+            <Grid container item xs={12} justifyContent={"space-between"}>
+              <Typography variant="body1">File:</Typography>
+              <Typography variant="body1">{customer?.content?.name}</Typography>
+            </Grid>
+
             <Grid container direction="row" marginTop={2}>
               <Grid item xs={6}>
                 <Box display="flex" marginLeft={2}>

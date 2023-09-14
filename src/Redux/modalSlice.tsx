@@ -18,12 +18,10 @@ const modalSlice = createSlice({
     openModal(state, action) {
       state.showModal = true;
       state.modalContent = action.payload;
-      console.log("open worked");
     },
     closeModal(state) {
       state.showModal = false;
       state.modalContent = null;
-      console.log("closed worked");
     },
   },
 });

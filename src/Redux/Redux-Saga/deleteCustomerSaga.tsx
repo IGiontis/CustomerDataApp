@@ -8,7 +8,6 @@ import { DELETE_CUSTOMERS } from "./ActionTypes/ActionTypes";
 
 function* deleteCustomerSaga(customerIdPayload: PayloadAction): Generator<any, void, any> {
   const customerId = customerIdPayload.payload;
-  console.log(customerIdPayload);
   yield put(startLoading());
   try {
     const response = yield call(

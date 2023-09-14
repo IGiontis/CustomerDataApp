@@ -16,12 +16,8 @@ interface EditButtonTypes {
 function EditButton({ customer }: EditButtonTypes) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.error("works");
-  //! Here the bug is that the button runs automatically when the form is loaded
 
   const handleCustomerId = () => {
-    console.warn("test edit");
-    console.log(customer);
     dispatch(selectCustomer(customer));
     navigate(`/customers/list?editCustomerName=${customer.name}&id=${customer.id}`);
     dispatch(openModal("edit"));
